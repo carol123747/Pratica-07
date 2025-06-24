@@ -46,27 +46,27 @@ sfc = "<HR>"                                                  // sufixo reivindi
 
 // para número da patente
 <NUMERO> {
-    [^<>\n\r][^<]*        { System.out.println("Número da Patente: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam o numero da patente e imprime
+    [^<>\n\r][^<]*        { System.out.println("Número da Patente: " + yytext().trim()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam o numero da patente e imprime
 }
 
 // para título
 <TITULO> {
-    [^<>\n\r][^<]*        { System.out.println("Título: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags de titulo e imprime
+    [^<>\n\r][^<]*        { System.out.println("Título: " + yytext().trim()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags de titulo e imprime
 }
 
 // para data de publicação
 <DATA> {
-    [^<>\n\r][^<]*        { System.out.println("Data de Publicação: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam a data da patente e imprime
+    [^<>\n\r][^<]*        { System.out.println("Data de Publicação: " + yytext().trim()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam a data da patente e imprime
 }
 
 // para resumo
 <ABSTRACT> {
-    [^<>\n\r][^<]*        { System.out.println("Resumo: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam o abstract da patente e imprime
+    [^<>\n\r][^<]*        { System.out.println("Resumo: " + yytext().trim()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam o abstract da patente e imprime
 }
 
 // para reivindicações
 <CLAIMS> {
     "Claims:"  { System.out.println("Reivindicações:"); } 
-    [0-9]+"."[^<]*         { System.out.println(yytext()); } // Imprime cada reivindicação
-    {sfc}                  { yybegin(YYINITIAL); } // Transição de volta para o estado inicial (essa transição tb ocorre nos outros casos)
+    [0-9]+"."[^<]*         { System.out.println(yytext().trim()); } // Imprime cada linha (nesse caso 1.)
+    {sfc}                  { yybegin(YYINITIAL); } // Transição de volta para o estado inicial (essa transição "yybegin(YYINITIAL)" tb ocorre nos outros casos)
 }
