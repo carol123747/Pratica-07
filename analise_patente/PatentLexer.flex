@@ -6,9 +6,9 @@
 %unicode
 %line
 %column
-%state NUMERO, TITULO, DATA, ABSTRACT, CLAIMS
+%state NUMERO, TITULO, DATA, ABSTRACT, CLAIMS // aqui eu coloquei todos os estados ou nome das tags do exercicio
 
-% Definições de expressões regulares
+// nessa parte tem as definições 
 regrasGerais = [ \t\n\r]+          // Regras gerais para caracteres de espaço em branco
 virgula = ","                      // Corresponde a uma vírgula
 letras = [A-Za-z]                  // letras (maiúsculas e minúsculas)
@@ -46,27 +46,27 @@ sfc = "<HR>"                                                  // sufixo reivindi
 
 // para número da patente
 <NUMERO> {
-    [^<>\n\r][^<]*        { System.out.println("Número da Patente: " + yytext()); yybegin(YYINITIAL); }
+    [^<>\n\r][^<]*        { System.out.println("Número da Patente: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam o numero da patente e imprime
 }
 
 // para título
 <TITULO> {
-    [^<>\n\r][^<]*        { System.out.println("Título: " + yytext()); yybegin(YYINITIAL); }
+    [^<>\n\r][^<]*        { System.out.println("Título: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags de titulo e imprime
 }
 
 // para data de publicação
 <DATA> {
-    [^<>\n\r][^<]*        { System.out.println("Data de Publicação: " + yytext()); yybegin(YYINITIAL); }
+    [^<>\n\r][^<]*        { System.out.println("Data de Publicação: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam a data da patente e imprime
 }
 
 // para resumo
 <ABSTRACT> {
-    [^<>\n\r][^<]*        { System.out.println("Resumo: " + yytext()); yybegin(YYINITIAL); }
+    [^<>\n\r][^<]*        { System.out.println("Resumo: " + yytext()); yybegin(YYINITIAL); } //pega o conteudo dentro das tags que representam o abstract da patente e imprime
 }
 
 // para reivindicações
 <CLAIMS> {
-    "What is claimed is:"  { System.out.println("Reivindicações:"); }
+    "Claims:"  { System.out.println("Reivindicações:"); } 
     [0-9]+"."[^<]*         { System.out.println(yytext()); } // Imprime cada reivindicação
-    {sfc}                  { yybegin(YYINITIAL); } // Transição de volta para o estado inicial
+    {sfc}                  { yybegin(YYINITIAL); } // Transição de volta para o estado inicial (essa transição tb ocorre nos outros casos)
 }
